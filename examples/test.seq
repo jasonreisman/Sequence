@@ -1,6 +1,8 @@
-A, B, Do Something
-B, A, Another Thing
-A, C, Tell the other guy
-C, D, Tell dinner order
-D, Dominos, Order Pizza
-Dominos, A, Deliver Pizza
+User, Browser, Clicks on link
+Browser, Server, Opens socket using link address
+Server, Browser, Accepts connection
+Browser, Server, Requests page content
+Server, Server, Loads content from storage, red
+Server, Browser, Returns page content
+Browser, Browser, Renders content
+Browser, User, Displays content
