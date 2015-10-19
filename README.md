@@ -6,7 +6,7 @@ Sequence lets you make sequence diagrams that look like this:
 
 <img src="http://jasonreisman.github.io/sequence/test.png" width="480">
 
-From text input which looks like this:
+from text input which looks like this:
 ```
 User, Browser, Clicks on link
 Browser, Server, Opens socket using link address
