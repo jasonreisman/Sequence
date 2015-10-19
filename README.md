@@ -15,6 +15,7 @@ Server, Browser, Returns page content
 Browser, Browser, Renders content
 Browser, User, Displays content
 ```
-
 ###Usage
-'''./make_sequence.py <in filename> > <out filename>'''
+```
+./make_sequence.py <in filename> > <out filename>
+```
