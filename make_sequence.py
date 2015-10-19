@@ -58,7 +58,7 @@ class Sequence:
 
 	def create_header(self):
 			text = 'filename: %s' % self.filename
-			self.drawing.add(self.drawing.text(text, insert=(self.top_left[0], 0.5*self.top_left[1]), stroke='none', fill=Colors.black, font_family="Helevetica", font_size="8pt", text_anchor="start"))
+			self.drawing.add(self.drawing.text(text, insert=(self.top_left[0], 0.5*self.top_left[1]), stroke='none', fill=Colors.gray, font_family="Helevetica", font_size="8pt", text_anchor="start"))
 
 	def create_actors(self):
 		x = self.top_left[0]
