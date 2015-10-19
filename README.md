@@ -4,7 +4,7 @@ A tool for creating SVG sequence diagrams from text input files.
 ###Example
 Sequence lets you make sequence diagrams that look like this:
 
-![test sequence diagram](http://jasonreisman.github.io/sequence/test.png)
+<img src="http://jasonreisman.github.io/sequence/test.png" width="480">
 
 From text input which looks like this:
 ```
