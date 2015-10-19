@@ -1,7 +1,7 @@
 # Sequence
 A tool for creating SVG sequence diagrams from text input files.
 
-##Example
+###Example
 Sequence lets you make sequence diagrams that look like this:
 
 From text input which looks like this:
@@ -15,3 +15,6 @@ Server, Browser, Returns page content
 Browser, Browser, Renders content
 Browser, User, Displays content
 ```
+
+###Usage
+'''./make_sequence.py <in filename> > <out filename>'''
