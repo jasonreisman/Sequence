@@ -1,8 +1,10 @@
+# user tells server
 User, Browser, Clicks on link
 Browser, Server, Opens socket using link address
 Server, Browser, Accepts connection
 Browser, Server, Requests page content
 Server, Server, Loads content from storage, red
+# server responds
 Server, Browser, Returns page content
 Browser, Browser, Renders content
-Browser, User, Displays content
+Browser, User, Displays content, red
