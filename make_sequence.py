@@ -9,16 +9,24 @@ class Colors:
 	black = '#000000'
 	gray = '#C0C0C0'
 
+class Phase:
+	def __init__(self, name, color, action0):
+		self.name = name
+		self.color = color
+		self.action0 = action0
+		self.action1 = None
+
 class Sequence:
 	def __init__(self, filename):
 		self.filename = filename
 		self.actors = []
 		self.actors_map = {}
 		self.actions = []
+		self.phases = []
 		# read actions into file
 		self.parse_input_file(filename)
 		# create drawing
-		self.top_left = (50, 50)
+		self.top_left = (100, 50)
 		self.step_size = (100, 25)
 		self.text_fudge = (0, 5)
 		self.width = self.top_left[0] + (len(self.actors) + 1)*self.step_size[0]
@@ -28,39 +36,62 @@ class Sequence:
 
 	def parse_input_file(self, filename):
 		# read actions into file
+		open_phases = []
 		with open(filename) as f:
 			for i, line in enumerate(f):
+				line = line.strip()
 				if len(line) == 0:
 					# skip empty lines
 					continue
 				if line[0] == '#':
 					# skip comments
 					continue
-				tokens = line.split(',')
-				assert len(tokens) >= 3, 'line %i has less than 3 tokens' % (i)
-				if len(tokens) < 3:
+				if line.startswith('@phase'):
+					tokens = map(lambda s : s.strip(), line[len('@phase'):].split(','))
+					assert len(tokens) > 0, '@phase must contain at least a name'
+					phase_name = tokens[0]
+					assert len(phase_name) > 0, '@phase must contain at least a name'
+					phase_color = tokens[1] if len(tokens) > 1 else Colors.gray
+					p = Phase(phase_name, phase_color, len(self.actions))
+					open_phases.append(p)						
 					continue
-				actor0 = tokens[0].strip()
-				actor1 = tokens[1].strip()
-				action = tokens[2].strip()
-				if actor0 not in self.actors_map:
-					key = len(self.actors)
-					self.actors_map[actor0] = key
-					self.actors.append(actor0)
-				if actor1 not in self.actors_map:
-					key = len(self.actors)
-					self.actors_map[actor1] = key
-					self.actors.append(actor1)
-				key0 = self.actors_map[actor0]
-				key1 = self.actors_map[actor1]
-				color = Colors.black
-				if len(tokens) > 3:
-					color = tokens[3].strip()
-				self.actions.append((key0, key1, action, color))
+				elif line.startswith('@endphase'):
+					assert len(open_phases) > 0, '@endphase found with no corresponding opening @phase'
+					p = open_phases.pop()
+					p.action1 = len(self.actions)
+					self.phases.append(p)
+				else:
+					self.parse_step(line)
+		assert len(open_phases) == 0, '@phase opened without corresponding closing @endphase'
+
+	def parse_step(self, line):
+		tokens = map(lambda s : s.strip(), line.split(','))
+		assert len(tokens) >= 3, 'line %i has less than 3 tokens' % (i)
+		if len(tokens) < 3:
+			return
+		actor0 = tokens[0]
+		actor1 = tokens[1]
+		action = tokens[2]
+		if actor0 not in self.actors_map:
+			key = len(self.actors)
+			self.actors_map[actor0] = key
+			self.actors.append(actor0)
+		if actor1 not in self.actors_map:
+			key = len(self.actors)
+			self.actors_map[actor1] = key
+			self.actors.append(actor1)
+		key0 = self.actors_map[actor0]
+		key1 = self.actors_map[actor1]
+		color = Colors.black
+		if len(tokens) > 3:
+			color = tokens[3].strip()
+		self.actions.append((key0, key1, action, color))
+
 
 	def build(self):
 		self.create_header()
 		self.create_actors()
+		self.create_phases()
 		self.create_actions()
 		pass
 
@@ -68,8 +99,30 @@ class Sequence:
 		return self.drawing.tostring()
 
 	def create_header(self):
-			text = 'filename: %s' % self.filename
-			self.drawing.add(self.drawing.text(text, insert=(self.top_left[0], 0.5*self.top_left[1]), stroke='none', fill=Colors.gray, font_family="Helevetica", font_size="8pt", text_anchor="start"))
+		text = 'filename: %s' % self.filename
+		self.drawing.add(self.drawing.text(text, insert=(self.top_left[0] - 0.5*self.step_size[0], 0.5*self.top_left[1]), stroke='none', fill=Colors.gray, font_family="Helevetica", font_size="8pt", text_anchor="start"))
+
+	def create_phases(self):
+		for phase in self.phases:
+			action0 = self.actions[phase.action0]
+			action1 = self.actions[phase.action1 - 1]
+
+			left = len(self.actors) + 1
+			right = -1
+			for action in self.actions[phase.action0:phase.action1]:
+				mn = min(action[0:2])
+				mx = max(action[0:2])
+				left = mn if mn < left else left
+				right = mx if mx > right else right
+			x = self.top_left[0] + (left - 0.5)*self.step_size[0]
+			y = self.top_left[1] + (phase.action0 + 0.5)*self.step_size[1]
+			w = (right - left + 1)*self.step_size[0]
+			h = (phase.action1 - phase.action0 - 0.125)*self.step_size[1]
+			filled_rect = self.drawing.add(self.drawing.rect((x,y), (w,h)))
+			filled_rect.fill(phase.color, None, 0.15)
+			self.drawing.add(self.drawing.rect((x,y), (w,h), stroke=phase.color, stroke_width=1, fill='none'))
+			transform = 'rotate(180,%i,%i) translate(6,0)' % (x, y+0.5*h)
+			self.drawing.add(self.drawing.text(phase.name, insert=(x, y+0.5*h), stroke='none', fill=phase.color, font_family="Helevetica", font_size="6pt", text_anchor="middle", writing_mode="tb", transform=transform))
 
 	def create_actors(self):
 		x = self.top_left[0]
