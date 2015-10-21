@@ -1,10 +1,18 @@
 # user tells server
+@phase Request, #CD3F85
 User, Browser, Clicks on link
 Browser, Server, Opens socket using link address
 Server, Browser, Accepts connection
 Browser, Server, Requests page content
-Server, Server, Loads content from storage, red
+@endphase
+@phase Synthesis, #C0C0FF
+Server, Database, Requests page data
+Database, Server, Returns page data
+Server, Server, Generates page content
+@endphase
+@phase Response, #CD853F
 # server responds
 Server, Browser, Returns page content
-Browser, Browser, Renders content
-Browser, User, Displays content, red
+Browser, Browser, Rasterizes content
+Browser, User, Presents content
+@endphase
