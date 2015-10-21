@@ -8,9 +8,10 @@ Sequence lets you make sequence diagrams that look like this:
 
 from text input which looks like this:
 ```
-# user tells server
 @phase Request, #CD3F85
+# user clicks link
 User, Browser, Clicks on link
+# browser connects to server
 Browser, Server, Opens socket using link address
 Server, Browser, Accepts connection
 Browser, Server, Requests page content
@@ -23,6 +24,7 @@ Server, Server, Generates page content
 @phase Response, #CD853F
 # server responds
 Server, Browser, Returns page content
+# browser rasterizes and presents new page to user
 Browser, Browser, Rasterizes content
 Browser, User, Presents content
 @endphase
