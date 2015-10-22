@@ -50,7 +50,7 @@ Or, if you'd like the arrow and text for the step to appear as green in the SVG:
 Client, Server, Makes Request, green
 ```
 
-**Note #1**: there is no need to define actors explicity.  They are implicitly defined in the steps themselves.  Sequence will make sure that there is a single instance of each actor, even though the same actor may be reused in multiple steps
+**Note #1**: there is no need (or way) to define actors explicity.  They are implicitly defined in the steps themselves.  Sequence will make sure that there is a single instance of each actor, even though the same actor may be reused in multiple steps
 
 **Note #2**: if the source actor and target actor are the same, then no arrow will be drawn between the actors.  Instead a dot will appear in the source/target actor column with the text describing the action.
 
