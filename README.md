@@ -31,7 +31,7 @@ Browser, User, Presents content
 ```
 ###Data format
 
-Sequence generates its SVG from a simple text data file.  There are two basic entities in the data file: _steps_ and _phases_.  Lines that begin with a hashtag (#) will be interpretted as comments, and have no effect on the image rendered.
+Sequence generates its SVG from a simple text data file.  There are two basic entities in the data file: _steps_ and _phases_.  Lines that begin with a hashtag (#) will be interpretted as comments, and have no effect on the image rendered.  Empty lines are also ignored.
 
 ####Steps
 
