@@ -77,7 +77,7 @@ Alice, Alice, Writes sensitive message
 Alice, Keystore, Retrieves Bob's public key
 Alice, Alice, Encrypts message using Bob's public key
 Alice, Bob, Sends message
-Bob, Bob, Descripts message using his private key
+Bob, Bob, Decrypts message using his private key
 @endphase
 Alice, Bob, Asks for comments
 ```
