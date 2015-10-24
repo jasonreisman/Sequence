@@ -71,17 +71,20 @@ Like steps, you can also optionally define a color for the phase.  For example, 
 Phases are closed using another special directive, `@endphase`.  The end phase directive doesn't take any arguments.  Any extra text on the line will be ignored.  A full example showing opening and closing a phase is:
 
 ```
+Bob, Keystore, Publishes public key
 Bob, Alice, Requests senstive material
 Alice, Alice, Writes sensitive message
 @phase Encryption
 Alice, Keystore, Retrieves Bob's public key
-Alice, Alice, Encrypts message using Bob's public key
-Alice, Bob, Sends message
-Bob, Bob, Decrypts message using his private key
+Alice, Alice, Encrypts message w/ pub key
 @endphase
-Alice, Bob, Asks for comments
+Alice, Bob, Sends encrypted message
+Bob, Bob, Decrypts message w/ priv key
 ```
 
+which produces this SVG:
+
+<img src="http://jasonreisman.github.io/sequence/alice_bob.png" width="480`">
 
 ### Prerequisites
 You must have a python 2.7 installation and install the Python package `svgwrite`.
