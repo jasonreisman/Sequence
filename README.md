@@ -91,5 +91,5 @@ You must have a python 2.7 installation and install the Python package `svgwrite
 
 ###Usage
 ```
-./make_sequence.py <in filename> > <out filename>
+./make_sequence.py in.seq > out.svg
 ```
