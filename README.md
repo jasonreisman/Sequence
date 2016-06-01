@@ -86,6 +86,16 @@ which produces this SVG:
 
 <img src="http://jasonreisman.github.io/sequence/alice_bob.png" width="480`">
 
+####Ordering
+
+If you want to specify a specific order for the actors in your diagram, you can do so by using the `@order` directive as the first line in your sequence file, followed by the specific actor order that you'd like to see (comma separated).
+
+For example, if we wanted to change the previous example to be in the order Alice, Bob, Keystore (instead of Bob, Keystore, Alice) we could add the following line to the very top of the file:
+
+`@order Alice, Bob, Keystore`
+
+Any actors not specified in the `@order` directive will appear in the order they appear in the rest of the file.
+
 ### Prerequisites
 You must have a python 2.7 installation and install the Python package `svgwrite`.
 
