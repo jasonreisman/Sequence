@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python
 
 import svgwrite
 
@@ -60,6 +60,13 @@ class Sequence:
 					p = open_phases.pop()
 					p.action1 = len(self.actions)
 					self.phases.append(p)
+				elif line.startswith('@order'):
+					assert i==0, '@order may only be on the first line!'
+					tokens = map(lambda s : s.strip(), line[len('@order'):].split(','))
+					for t in tokens:
+						key = len(self.actors)
+						self.actors_map[t] = key
+						self.actors.append(t)
 				else:
 					self.parse_step(line)
 		assert len(open_phases) == 0, '@phase opened without corresponding closing @endphase'
