@@ -90,9 +90,24 @@ which produces this SVG:
 
 If you want to specify a specific order for the actors in your diagram, you can do so by using the `@order` directive as the first line in your sequence file, followed by the specific actor order that you'd like to see (comma separated).
 
-For example, if we wanted to change the previous example to be in the order Alice, Bob, Keystore (instead of Bob, Keystore, Alice) we could add the following line to the very top of the file:
+For instance, if we wanted to change the previous example to be in the order Alice, Bob, Keystore (instead of Bob, Keystore, Alice) we could add a `@order` directive at the top:
 
-`@order Alice, Bob, Keystore`
+```
+@order Alice, Bob, Keystore
+Bob, Keystore, Publishes public key
+Bob, Alice, Requests senstive material
+Alice, Alice, Writes sensitive message
+@phase Encryption
+Alice, Keystore, Retrieves Bob's public key
+Alice, Alice, Encrypts message w/ pub key
+@endphase
+Alice, Bob, Sends encrypted message
+Bob, Bob, Decrypts message w/ priv key
+```
+
+which then produces this SVG:
+
+<img src="http://jasonreisman.github.io/sequence/alice_bob_ordered.png" width="480`">
 
 Any actors not specified in the `@order` directive will appear in the order they appear in the rest of the file.
 
