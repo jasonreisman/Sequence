@@ -88,7 +88,7 @@ which produces this SVG:
 
 ####Ordering
 
-By defaults, actors will be rendered from left to right in the order that they appear in the sequence file.  However, if you want to specify a specific order for the actors in your diagram, you can do so by using the `@order` directive as the first line in your sequence file, followed by the specific actor order that you'd like to see (comma separated).  (Comments and blank lines may preceed `@order`, but nothing else.)
+By defaults, actors will be rendered from left to right in the order that they appear in the sequence file.  However, if you want to specify a specific order for the actors in your diagram, you can do so by using the `@order` directive as the first line in your sequence file, followed by the (comma separated) specific actor order that you'd like to see.  Comment and blank lines may preceed `@order`, but nothing else.
 
 For instance, if we wanted to change the previous example to be in the order Alice, Bob, Keystore (instead of Bob, Keystore, Alice) we could add a `@order` directive at the top:
 
