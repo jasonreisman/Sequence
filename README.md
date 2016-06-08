@@ -112,9 +112,9 @@ which then produces this SVG:
 Any actors not specified in the `@order` directive will appear in the order they appear in the rest of the file.
 
 ### Prerequisites
-You must have a python 2.7 installation and install the Python package `svgwrite`.
+You must have a python 2.7 installation and install the Python package `svgwrite` (e.g., `pip install svgwrite`)
 
 ###Usage
 ```
-./make_sequence.py in.seq > out.svg
+python make_sequence.py in.seq > out.svg
 ```
