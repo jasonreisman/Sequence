@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import svgwrite
 
 import os.path
@@ -37,6 +35,7 @@ class Sequence:
 	def parse_input_file(self, filename):
 		# read actions into file
 		open_phases = []
+		num_lines_processed = 0
 		with open(filename) as f:
 			for i, line in enumerate(f):
 				line = line.strip()
@@ -54,14 +53,13 @@ class Sequence:
 					phase_color = tokens[1] if len(tokens) > 1 else Colors.gray
 					p = Phase(phase_name, phase_color, len(self.actions))
 					open_phases.append(p)						
-					continue
 				elif line.startswith('@endphase'):
 					assert len(open_phases) > 0, '@endphase found with no corresponding opening @phase'
 					p = open_phases.pop()
 					p.action1 = len(self.actions)
 					self.phases.append(p)
 				elif line.startswith('@order'):
-					assert i==0, '@order may only be on the first line!'
+					assert num_lines_processed==0, '@order may only be on the first line!'
 					tokens = map(lambda s : s.strip(), line[len('@order'):].split(','))
 					for t in tokens:
 						key = len(self.actors)
@@ -69,6 +67,7 @@ class Sequence:
 						self.actors.append(t)
 				else:
 					self.parse_step(line)
+				num_lines_processed += 1
 		assert len(open_phases) == 0, '@phase opened without corresponding closing @endphase'
 
 	def parse_step(self, line):
