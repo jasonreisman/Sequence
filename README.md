@@ -1,7 +1,7 @@
 # Sequence
 A tool for creating SVG sequence diagrams from text input files.
 
-###Example
+### Example
 Sequence lets you make sequence diagrams that look like this:
 
 <img src="http://jasonreisman.github.io/sequence/test.png" width="640`">

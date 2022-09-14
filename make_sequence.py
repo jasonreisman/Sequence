@@ -46,7 +46,7 @@ class Sequence:
 					# skip comments
 					continue
 				if line.startswith('@phase'):
-					tokens = map(lambda s : s.strip(), line[len('@phase'):].split(','))
+					tokens = [s.strip() for s in line[len('@phase'):].split(',')]
 					assert len(tokens) > 0, '@phase must contain at least a name'
 					phase_name = tokens[0]
 					assert len(phase_name) > 0, '@phase must contain at least a name'
@@ -60,7 +60,7 @@ class Sequence:
 					self.phases.append(p)
 				elif line.startswith('@order'):
 					assert num_lines_processed==0, '@order may only be on the first line!'
-					tokens = map(lambda s : s.strip(), line[len('@order'):].split(','))
+					tokens = [s.strip() for s in line[len('@order'):].split(',')]
 					for t in tokens:
 						key = len(self.actors)
 						self.actors_map[t] = key
@@ -71,7 +71,7 @@ class Sequence:
 		assert len(open_phases) == 0, '@phase opened without corresponding closing @endphase'
 
 	def parse_step(self, line):
-		tokens = map(lambda s : s.strip(), line.split(','))
+		tokens = [s.strip() for s in line.split(',')]
 		assert len(tokens) >= 3, 'line %i has less than 3 tokens' % (i)
 		if len(tokens) < 3:
 			return
@@ -174,17 +174,17 @@ class Sequence:
 		return start_marker, end_marker
 
 def usage():
-	print 'Usage: ./make_sequence.py <in filename> > <out filename>'
+	print('Usage: ./make_sequence.py <in filename> > <out filename>')
 	sys.exit(-1)
 
 if __name__ == '__main__':
 	if len(sys.argv) < 2:
-		print 'missing input filename'
+		print('missing input filename')
 		usage()
 	filename = sys.argv[1]
 	if not os.path.isfile(filename):
-		print 'file %s not found' % filename
+		print('file %s not found' % filename)
 		sys.exit(-1)
 	seq = Sequence(sys.argv[1])
 	seq.build()
-	print seq.to_string()
+	print(seq.to_string())
