@@ -1,2 +1,5 @@
 /*.seq
 *.svg
+*~
+*#
+sequence/__pycache__/*
