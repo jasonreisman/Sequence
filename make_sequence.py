@@ -194,7 +194,6 @@ class Sequence(object):
 
 
 def main():
-        logger.info('Process start')
         # Parameters
         cmd_param = argparse.ArgumentParser(
                 description='A tool for creating SVG sequence diagrams from text input files.')
@@ -216,6 +215,8 @@ def main():
                 logger.setLevel(logging.DEBUG)
         txtin_flow_filename = param.inputfile
         svgout_flow_filename = param.outputfile
+
+        logger.info('Process start')
 
         if not os.path.isfile(txtin_flow_filename):
                 print(f'File {txtin_flow_filename} not found')
