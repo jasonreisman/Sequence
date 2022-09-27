@@ -29,12 +29,11 @@ Browser, Browser, Rasterizes content
 Browser, User, Presents content
 @endphase
 ```
-### Data format
 
+### Data format
 Sequence generates its SVG from a simple text data file.  There are two basic entities in the data file: _steps_ and _phases_.  Lines that begin with a hashtag (#) will be interpretted as comments, and have no effect on the image rendered.  Empty lines are also ignored.
 
 #### Steps
-
 Each _step_ in the sequence, where a step is defined as _an action between two actors_, is a single line in the input data file.  (A step will be rendered as an arrow with text between actor columns.)  The line must be comma-separated and contain either three or four values.  The first value is the source actor, the one invoking the action.  The second entry is the target actor, the one receiving the action.  The third entry is a description of the action itself.  The fourth value is optional, but if present will be used as the step's color.
 
 For example:
@@ -55,7 +54,6 @@ Client, Server, Makes Request, green
 **Note #2**: if the source actor and target actor are the same, then no arrow will be drawn between the actors.  Instead a dot will appear in the source/target actor column with the text describing the action.
 
 #### Phases
-
 A _phase_ is a collection of steps which will visually grouped together in the SVG.  Phases are opened by the special directive in the data `@phase`.  When opening a phase you will need to supply the name for the phase.  This is just text included after the open phase directive.  For example:
 
 ```
@@ -87,7 +85,6 @@ which produces this SVG:
 <img src="help/alice_bob.png" width="480`">
 
 #### Ordering
-
 By defaults, actors will be rendered from left to right in the order that they appear in the sequence file.  However, if you want to specify a specific order for the actors in your diagram, you can do so by using the `@order` directive as the first line in your sequence file, followed by the (comma separated) specific actor order that you'd like to see.  Comment and blank lines may preceed `@order`, but nothing else.
 
 For instance, if we wanted to change the previous example to be in the order Alice, Bob, Keystore (instead of Bob, Keystore, Alice) we could add a `@order` directive at the top:
