@@ -194,6 +194,7 @@ class Sequence(object):
 
 
 def main():
+        logger.info('Process start')
         # Parameters
         cmd_param = argparse.ArgumentParser(
                 description='A tool for creating SVG sequence diagrams from text input files.')
@@ -220,6 +221,7 @@ def main():
                 print(f'File {txtin_flow_filename} not found')
                 sys.exit(-1)
 
+        logger.info('Processing sequence text file')
         seq = Sequence(txtin_flow_filename)
         seq.build()
 
@@ -227,6 +229,7 @@ def main():
 
         with open(svgout_flow_filename, 'w') as f:
                 print(seq.to_string(), file=f)
+                logger.info('SVG file saved')
 
 if __name__ == '__main__':
         main()
