@@ -116,7 +116,7 @@ You must have a python 2.7 installation and install the Python package `svgwrite
 
 ### Usage
 ```
-usage: make_sequence.py [-h] --in text_flow_filename --out svg_filename
+usage: make_sequence.py [-h] --in text_flow_filename --out svg_filename [--debug]
 
 A tool for creating SVG sequence diagrams from text input files.
 
@@ -126,4 +126,5 @@ options:
                         Flow text file input.
   --out svg_filename, -o svg_filename
                         This is the result svg file.
+  --debug, -d           Enable debug mode.
 ```
