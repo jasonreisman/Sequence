@@ -116,5 +116,14 @@ You must have a python 2.7 installation and install the Python package `svgwrite
 
 ### Usage
 ```
-python make_sequence.py in.seq > out.svg
+usage: make_sequence.py [-h] --in text_flow_filename --out svg_filename
+
+A tool for creating SVG sequence diagrams from text input files.
+
+options:
+  -h, --help            show this help message and exit
+  --in text_flow_filename, -i text_flow_filename
+                        Flow text file input.
+  --out svg_filename, -o svg_filename
+                        This is the result svg file.
 ```
