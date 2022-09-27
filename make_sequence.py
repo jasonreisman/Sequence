@@ -6,7 +6,11 @@ import os.path
 import sys
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+# Default logging configuration
+logging.basicConfig(level=logging.INFO)
+
+# Get logger object
+logger = logging.getLogger(__name__)
 
 class Colors:
         black = '#000000'
@@ -47,15 +51,15 @@ class Sequence(object):
                 with open(filename) as f:
                         for i, line in enumerate(f):
                                 line = line.strip()
-                                logging.debug('New line: %s' % line)
+                                logger.debug('New line: %s' % line)
                                 if len(line) == 0:
-                                        logging.debug('skip empty lines')
+                                        logger.debug('skip empty lines')
                                         continue
                                 if line[0] == '#':
-                                        logging.debug('skip comments')
+                                        logger.debug('skip comments')
                                         continue
                                 if line.startswith('@phase'):
-                                        logging.debug('opens a phase')
+                                        logger.debug('opens a phase')
                                         tokens = [s.strip() for s in line[len('@phase'):].split(',')]
                                         assert len(tokens) > 0, '@phase must contain at least a name'
                                         phase_name = tokens[0]
@@ -63,15 +67,15 @@ class Sequence(object):
                                         phase_color = tokens[1] if len(tokens) > 1 else Colors.gray
                                         p = Phase(phase_name, phase_color, len(self.actions))
                                         open_phases.append(p)
-                                        logging.debug('total open phases: %d' % len(open_phases))
+                                        logger.debug('total open phases: %d' % len(open_phases))
                                 elif line.startswith('@endphase'):
-                                        logging.debug('ends a phase')
+                                        logger.debug('ends a phase')
                                         assert len(open_phases) > 0, '@endphase found with no corresponding opening @phase'
                                         p = open_phases.pop()
                                         p.action1 = len(self.actions)
                                         self.phases.append(p)
                                 elif line.startswith('@order'):
-                                        logging.debug('order line')
+                                        logger.debug('order line')
                                         assert num_lines_processed==0, '@order may only be on the first line!'
                                         tokens = [s.strip() for s in line[len('@order'):].split(',')]
                                         for t in tokens:
@@ -79,7 +83,7 @@ class Sequence(object):
                                                 self.actors_map[t] = key
                                                 self.actors.append(t)
                                 else:
-                                        logging.debug('process a flow line')
+                                        logger.debug('process a flow line')
                                         self.parse_step(line)
                                 num_lines_processed += 1
                 if len(open_phases) != 0:
@@ -201,9 +205,14 @@ def main():
                                metavar='svg_filename', type=str,
                                required=True,
                                help='This is the result svg file.')
+        cmd_param.add_argument('--debug', '-d', dest='debug', default=False,
+                               required=False, action='store_true',
+                               help='Enable debug mode.')
 
         param = cmd_param.parse_args()
-
+        if param.debug:
+                # change logger verbose level
+                logger.setLevel(logging.DEBUG)
         txtin_flow_filename = param.inputfile
         svgout_flow_filename = param.outputfile
 
@@ -213,11 +222,11 @@ def main():
 
         seq = Sequence(txtin_flow_filename)
         seq.build()
-        print(seq.to_string())
+
+        logger.debug('SVG file: %s' %seq.to_string())
 
         with open(svgout_flow_filename, 'w') as f:
                 print(seq.to_string(), file=f)
 
- 
 if __name__ == '__main__':
         main()
